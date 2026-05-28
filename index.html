@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CCaaS Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <a class="brand" href="#" aria-label="CCaaS dashboard home">
+          <span>P</span>
+        </a>
+
+        <nav class="side-nav">
+          <a class="nav-item active" href="#">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-solid fa-phone-volume"></i>
+            <span>Telephony</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-regular fa-address-book"></i>
+            <span>Contacts</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-solid fa-phone"></i>
+            <span>Phone</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-regular fa-comments"></i>
+            <span>Chat</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-solid fa-video"></i>
+            <span>Video</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>Campaign</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-regular fa-inbox"></i>
+            <span>Inbox</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>AI Tools</span>
+          </a>
+          <a class="nav-item" href="#">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Reports</span>
+          </a>
+        </nav>
+
+        <div class="agent-avatar" aria-label="Current agent">
+          <span class="avatar-dot"></span>
+        </div>
+      </aside>
+
+      <main class="main-area">
+        <header class="topbar">
+          <label class="search-shell">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" placeholder="Search here..." />
+            <kbd>Ctrl K</kbd>
+          </label>
+
+          <div class="top-actions" aria-label="Quick controls">
+            <button class="icon-button" aria-label="Automation">
+              <i class="fa-solid fa-sliders"></i>
+            </button>
+            <button class="icon-button" aria-label="Calendar">
+              <i class="fa-regular fa-calendar-days"></i>
+            </button>
+            <button class="icon-button" aria-label="Call timer">
+              <i class="fa-regular fa-clock"></i>
+            </button>
+            <button class="icon-button" aria-label="Headset">
+              <i class="fa-solid fa-headset"></i>
+            </button>
+            <button class="icon-button" aria-label="Dialer">
+              <i class="fa-solid fa-phone-volume"></i>
+            </button>
+            <button class="icon-button has-alert" aria-label="Notifications">
+              <i class="fa-regular fa-bell"></i>
+            </button>
+            <button class="icon-button" aria-label="Theme">
+              <i class="fa-regular fa-sun"></i>
+            </button>
+            <button class="balance-pill" aria-label="Account balance">
+              <span>$7216.26</span>
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <div class="user-pill">
+              <strong>Hi, Test Admin 1</strong>
+              <span>DP Demo</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="page-heading">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Overview of call statistics and performance metrics.</p>
+          </div>
+          <div class="dashboard-controls">
+            <div class="segmented-tabs" role="tablist" aria-label="Dashboard sections">
+              <button class="active" type="button">
+                <i class="fa-solid fa-gauge-high"></i>
+                Dashboard
+              </button>
+              <button type="button">
+                <i class="fa-solid fa-wave-square"></i>
+                KPI / Activities
+              </button>
+              <button type="button">
+                <i class="fa-solid fa-display"></i>
+                Agent Monitor
+              </button>
+              <button type="button">
+                <i class="fa-solid fa-phone"></i>
+                Live Call
+              </button>
+            </div>
+            <button
+              class="edit-dashboard-fab"
+              id="openCustomizer"
+              type="button"
+              aria-label="Edit dashboard widgets"
+            >
+              <i class="fa-solid fa-pen"></i>
+            </button>
+          </div>
+        </section>
+
+        <section class="metrics-grid" aria-label="Dashboard summary">
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Total Calls Today</span>
+              <span class="metric-icon blue"><i class="fa-solid fa-phone"></i></span>
+            </div>
+            <div class="metric-value">42 <span class="trend up">&uarr; 18.5%</span></div>
+            <p>vs yesterday (35)</p>
+            <canvas id="totalCallsSpark" height="64"></canvas>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Answered Calls</span>
+              <span class="metric-icon green"><i class="fa-solid fa-phone-volume"></i></span>
+            </div>
+            <div class="metric-value">24 <span class="trend up">&uarr; 20%</span></div>
+            <p>vs yesterday (20)</p>
+            <canvas id="answeredSpark" height="64"></canvas>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Missed Calls</span>
+              <span class="metric-icon red"><i class="fa-solid fa-phone-slash"></i></span>
+            </div>
+            <div class="metric-value">12 <span class="trend down">&darr; 14.3%</span></div>
+            <p>vs yesterday (14)</p>
+            <canvas id="missedSpark" height="64"></canvas>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-head">
+              <span>Avg. Call Time</span>
+              <span class="metric-icon purple"><i class="fa-solid fa-stopwatch"></i></span>
+            </div>
+            <div class="metric-value">00:01:31 <span class="trend up">&uarr; 8.2%</span></div>
+            <p>vs yesterday (00:01:24)</p>
+            <canvas id="avgTimeSpark" height="64"></canvas>
+          </article>
+
+          <article class="summary-card">
+            <div class="section-title compact">
+              <div>
+                <h2>Call Summary (23/05/2026)</h2>
+                <p>Total Duration, Avg. Call Time and Total Calls</p>
+              </div>
+            </div>
+            <div class="summary-grid">
+              <div class="summary-tile green">
+                <span>Inbound Calls</span>
+                <strong>22</strong>
+              </div>
+              <div class="summary-tile blue">
+                <span>Outbound Calls</span>
+                <strong>20</strong>
+              </div>
+              <div class="summary-tile orange">
+                <span>Internal Calls</span>
+                <strong>0</strong>
+              </div>
+              <div class="summary-tile indigo">
+                <span>Avg. Call Time</span>
+                <strong>0 min 31 sec</strong>
+              </div>
+              <div class="summary-tile teal">
+                <span>Total Duration</span>
+                <strong>00:14:19</strong>
+              </div>
+              <div class="summary-tile purple">
+                <span>Total Calls</span>
+                <strong>42</strong>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="charts-grid">
+          <article class="panel trend-panel">
+            <div class="section-title">
+              <div>
+                <h2>Call Trend (Today)</h2>
+              </div>
+              <select aria-label="Call trend range">
+                <option>Today</option>
+                <option>This Week</option>
+                <option>This Month</option>
+              </select>
+            </div>
+            <div class="legend-row">
+              <span><i class="dot green"></i>Inbound Calls</span>
+              <span><i class="dot blue"></i>Outbound Calls</span>
+              <span><i class="dot red"></i>Missed Calls</span>
+            </div>
+            <canvas id="callTrendChart" height="220"></canvas>
+          </article>
+
+          <article class="panel heatmap-panel">
+            <div class="section-title">
+              <div>
+                <h2>Call Distribution</h2>
+                <p>By time of day</p>
+              </div>
+              <select aria-label="Distribution range">
+                <option>This Week</option>
+                <option>Last Week</option>
+              </select>
+            </div>
+            <div class="heatmap-wrap">
+              <div class="heatmap-labels">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
+              </div>
+              <div class="heatmap" id="heatmap"></div>
+              <div class="heatmap-scale">
+                <span>High</span>
+                <i></i>
+                <span>Low</span>
+              </div>
+            </div>
+            <div class="time-labels">
+              <span>12 AM</span>
+              <span>04 AM</span>
+              <span>08 AM</span>
+              <span>12 PM</span>
+              <span>04 PM</span>
+              <span>08 PM</span>
+            </div>
+          </article>
+
+          <article class="panel outcomes-panel">
+            <div class="section-title">
+              <div>
+                <h2>Call Outcomes</h2>
+                <p>Breakdown of call result</p>
+              </div>
+              <select aria-label="Outcomes range">
+                <option>Today</option>
+                <option>This Week</option>
+              </select>
+            </div>
+            <div class="outcome-list">
+              <div class="outcome-row">
+                <span>Answered</span>
+                <div class="progress-track"><i style="width: 57%"></i></div>
+                <strong>57% (24)</strong>
+              </div>
+              <div class="outcome-row">
+                <span>No Answer</span>
+                <div class="progress-track orange"><i style="width: 28%"></i></div>
+                <strong>28% (12)</strong>
+              </div>
+              <div class="outcome-row">
+                <span>Busy</span>
+                <div class="progress-track red"><i style="width: 10%"></i></div>
+                <strong>10% (4)</strong>
+              </div>
+              <div class="outcome-row">
+                <span>Voicemail</span>
+                <div class="progress-track purple"><i style="width: 5%"></i></div>
+                <strong>5% (2)</strong>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="lower-grid">
+          <article class="panel activity-panel">
+            <div class="section-title">
+              <div>
+                <h2>Call Activity Overview</h2>
+                <p>Stay updated with all live and missed call activities.</p>
+              </div>
+            </div>
+            <div class="activity-tabs">
+              <button class="active" type="button">
+                Live Calls <span>3</span>
+              </button>
+              <button type="button">
+                Missed Calls <span>112</span>
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Caller</th>
+                    <th>Duration</th>
+                    <th>Status</th>
+                    <th>Direction</th>
+                    <th>Received By</th>
+                    <th>Forwarding Type</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>+1 (555) 123-4567</strong>
+                      <span>New York, USA</span>
+                    </td>
+                    <td>00:00:45</td>
+                    <td><span class="status-pill live">Live</span></td>
+                    <td><i class="fa-solid fa-arrow-down direction in"></i> Inbound</td>
+                    <td>Test Agent 1</td>
+                    <td>---</td>
+                    <td><button class="row-action" aria-label="Call"><i class="fa-solid fa-phone"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>+1 (555) 987-6543</strong>
+                      <span>California, USA</span>
+                    </td>
+                    <td>00:01:12</td>
+                    <td><span class="status-pill live">Live</span></td>
+                    <td><i class="fa-solid fa-arrow-up direction out"></i> Outbound</td>
+                    <td>Test Agent 2</td>
+                    <td>Mobile</td>
+                    <td><button class="row-action" aria-label="Call"><i class="fa-solid fa-phone"></i></button></td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>+1 (555) 246-8100</strong>
+                      <span>Texas, USA</span>
+                    </td>
+                    <td>00:02:01</td>
+                    <td><span class="status-pill live">Live</span></td>
+                    <td><i class="fa-solid fa-arrow-down direction in"></i> Inbound</td>
+                    <td>Test Agent 3</td>
+                    <td>---</td>
+                    <td><button class="row-action" aria-label="Call"><i class="fa-solid fa-phone"></i></button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <a class="panel-link" href="#">View all live calls <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+
+          <article class="panel campaign-panel">
+            <div class="section-title">
+              <div>
+                <h2>Top Campaigns (Today)</h2>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Campaign</th>
+                    <th>Total Calls</th>
+                    <th>Answered</th>
+                    <th>Success Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Spring Offer</td>
+                    <td>120</td>
+                    <td>72</td>
+                    <td><strong>60%</strong><span class="mini-bar"><i style="width: 60%"></i></span></td>
+                  </tr>
+                  <tr>
+                    <td>Product Demo</td>
+                    <td>98</td>
+                    <td>58</td>
+                    <td><strong>59%</strong><span class="mini-bar"><i style="width: 59%"></i></span></td>
+                  </tr>
+                  <tr>
+                    <td>Lead Followup</td>
+                    <td>75</td>
+                    <td>40</td>
+                    <td><strong>53%</strong><span class="mini-bar"><i style="width: 53%"></i></span></td>
+                  </tr>
+                  <tr>
+                    <td>Customer Care</td>
+                    <td>60</td>
+                    <td>30</td>
+                    <td><strong>50%</strong><span class="mini-bar"><i style="width: 50%"></i></span></td>
+                  </tr>
+                  <tr>
+                    <td>Survey Campaign</td>
+                    <td>40</td>
+                    <td>18</td>
+                    <td><strong>45%</strong><span class="mini-bar"><i style="width: 45%"></i></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <a class="panel-link" href="#">View all campaigns <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+
+          <article class="panel status-panel">
+            <div class="section-title">
+              <div>
+                <h2>System Status</h2>
+              </div>
+            </div>
+            <ul class="status-list">
+              <li><span>Telephony Service</span><strong><i></i>Operational</strong></li>
+              <li><span>SIP Trunk</span><strong><i></i>Operational</strong></li>
+              <li><span>AI Service</span><strong><i></i>Operational</strong></li>
+              <li><span>Chat Service</span><strong><i></i>Operational</strong></li>
+              <li><span>Database</span><strong><i></i>Operational</strong></li>
+              <li><span>API Gateway</span><strong><i></i>Operational</strong></li>
+            </ul>
+            <a class="panel-link" href="#">View system status <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </section>
+
+        <footer class="page-footer">
+          <span>&copy; 2026 UCaaS/CCaaS Admin Panel. All rights reserved.</span>
+          <span>v2.0.0</span>
+        </footer>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="customizerModal" aria-hidden="true">
+      <section
+        class="customizer-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="customizerTitle"
+      >
+        <header class="customizer-header">
+          <div>
+            <span class="eyebrow">Dashboard Studio</span>
+            <h2 id="customizerTitle">Customize Dashboard Widgets</h2>
+            <p>Choose CCaaS widgets, preview their purpose, and save a clean demo layout.</p>
+          </div>
+          <button class="modal-close" id="closeCustomizer" type="button" aria-label="Close customizer">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </header>
+
+        <div class="customizer-toolbar">
+          <label class="modal-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="widgetSearch" type="search" placeholder="Search widgets, metrics, AI, queues..." />
+          </label>
+          <div class="customizer-actions">
+            <button class="ghost-button" id="resetWidgets" type="button">
+              <i class="fa-solid fa-rotate-left"></i>
+              Reset Default
+            </button>
+            <button class="primary-button" id="saveWidgets" type="button">
+              <i class="fa-solid fa-floppy-disk"></i>
+              Save Dashboard Layout
+            </button>
+          </div>
+        </div>
+
+        <div class="customizer-body">
+          <aside class="category-sidebar" aria-label="Widget categories">
+            <button class="category-pill active" type="button" data-category="All Widgets">
+              All Widgets <span>50</span>
+            </button>
+            <div id="categoryList"></div>
+          </aside>
+
+          <div class="widget-browser">
+            <div class="widget-browser-head">
+              <div>
+                <h3 id="activeCategoryTitle">All Widgets</h3>
+                <p id="widgetCountLabel">50 widget options available</p>
+              </div>
+              <div class="layout-hint">
+                <i class="fa-solid fa-grip-vertical"></i>
+                Drag style layout preview
+              </div>
+            </div>
+            <div class="widget-grid" id="widgetGrid"></div>
+            <div class="empty-state" id="emptyState">
+              <i class="fa-regular fa-face-smile"></i>
+              <strong>No widgets found</strong>
+              <span>Try a different search term or category.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
